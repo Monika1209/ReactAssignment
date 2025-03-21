@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 
 function Home() {
   const headingRef = useRef(null);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
     const heading = headingRef.current;
@@ -43,20 +44,52 @@ function Home() {
     });
   }, []);
 
+  // Function to toggle the theme
+  const toggleTheme = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
+
   return (
     <div
       id="box"
       style={{
-        backgroundColor: "black",
+        backgroundColor: isDarkMode ? "black" : "white",
         height: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        transition: "background-color 0.3s",
       }}
     >
-      <h1 id="heading" ref={headingRef} style={{ color: "white", textAlign: "center", fontSize: "9rem" }}>  
-        Monika Kushwaha
-      </h1>
+      <div style={{ textAlign: "center" }}>
+        <h1
+          id="heading"
+          ref={headingRef}
+          style={{
+            color: isDarkMode ? "white" : "black",
+            fontSize: "9rem",
+            transition: "color 0.3s",
+          }}
+        >
+          Monika Kushwaha
+        </h1>
+        <button
+          onClick={toggleTheme}
+          style={{
+            marginTop: "20px",
+            padding: "10px 20px",
+            fontSize: "1rem",
+            backgroundColor: isDarkMode ? "#fff" : "#333",
+            color: isDarkMode ? "#333" : "#fff",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            transition: "background-color 0.3s, color 0.3s",
+          }}
+        >
+          {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        </button>
+      </div>
     </div>
   );
 }
